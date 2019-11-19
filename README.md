@@ -5,14 +5,15 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version 2.4.1
+
+* Rails version 5.2.3
 
 * System dependencies
 
-* Configuration
+* Configuration: After cloning the repo, run `bundle install` in the terminal to install gems.
 
-* Database creation
-To import the csv data into the application, run `rake import:all` in the terminal.
+* Database creation: Run `bundle exec rake db:{create, migrate}` to set up the database. To import the csv data into the application, run `rake import:all` in the terminal.
 
 * Database initialization
 
