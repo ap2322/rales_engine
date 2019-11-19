@@ -12,6 +12,7 @@ Things you may want to cover:
 * Configuration
 
 * Database creation
+To import the csv data into the application, run `rake import:all` in the terminal.
 
 * Database initialization
 
