@@ -33,13 +33,23 @@ describe "Merchants Records API" do
 
   it "returns a merchant from a find query parameter" do
     create_list(:merchant, 3)
-    create(:merchant, name: "Merchant Billy-Bob")
-    merchant = Merchant.find_by(name: "Merchant Billy-Bob")
+    merchant = Merchant.create!(name: "Merchant Billy-Bob", created_at: "2012-03-27 14:53:59", updated_at: "2015-03-27 14:53:59")
 
     get "/api/v1/merchants/find?name=#{merchant.name}"
     json_merchant = JSON.parse(response.body)
 
     expect(response).to be_successful
     expect(json_merchant["data"]["attributes"]["name"]).to eq("Merchant Billy-Bob")
+
+    get "/api/v1/merchants/find?created_at=#{merchant.created_at}"
+    json_merchant = JSON.parse(response.body)
+    expect(response).to be_successful
+    expect(json_merchant["data"]["id"].to_i).to eq(merchant.id)
+
+    get "/api/v1/merchants/find?updated_at=#{merchant.updated_at}"
+    json_merchant = JSON.parse(response.body)
+    expect(response).to be_successful
+    expect(json_merchant["data"]["id"].to_i).to eq(merchant.id)
+
   end
 end
