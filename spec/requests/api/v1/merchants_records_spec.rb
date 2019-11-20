@@ -51,5 +51,10 @@ describe "Merchants Records API" do
     expect(response).to be_successful
     expect(json_merchant["data"]["id"].to_i).to eq(merchant.id)
 
+    get "/api/v1/merchants/find?id=#{merchant.id}"
+    json_merchant = JSON.parse(response.body)
+    expect(response).to be_successful
+    expect(json_merchant["data"]["id"].to_i).to eq(merchant.id)
+
   end
 end
