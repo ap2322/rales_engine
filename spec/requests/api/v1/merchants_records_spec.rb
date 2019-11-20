@@ -1,25 +1,26 @@
 require 'rails_helper'
 
 describe "Merchants Records API" do
-  before(:each) do
-    create_list(:merchant, 3)
-  end
 
-  after(:all) do
-    Merchant.all.delete_all
+  after(:each) do
+    Merchant.all.destroy_all
   end
 
   it "sends a list of merchants" do
+    create_list(:merchant, 3)
+
     get '/api/v1/merchants'
 
     expect(response).to be_successful
 
     merchants = JSON.parse(response.body)
 
-    expect(merchants.count).to eq 3
+    expect(merchants["data"].count).to eq 3
   end
 
   it "shows a single merchant" do
+    create(:merchant)
+
     id = Merchant.first.id
     get "/api/v1/merchants/#{id}"
 
@@ -27,6 +28,6 @@ describe "Merchants Records API" do
     merchant = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(merchant["id"]).to eq(id)
+    expect(merchant["data"]["id"].to_i).to eq(id)
   end
 end
