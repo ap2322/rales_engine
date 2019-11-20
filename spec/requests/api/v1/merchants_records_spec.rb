@@ -57,4 +57,17 @@ describe "Merchants Records API" do
     expect(json_merchant["data"]["id"].to_i).to eq(merchant.id)
 
   end
+
+  it "returns all merchants that match a specific query parameter" do
+    create_list(:merchant, 3, name: "Jim James")
+    merchant = Merchant.create!(name: "Merchant Billy-Bob", created_at: "2012-03-27 14:53:59", updated_at: "2015-03-27 14:53:59")
+
+    get "/api/v1/merchants/find_all?name=Jim James"
+    json_merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(json_merchants["data"].count).to eq(3)
+    expect(json_merchants["data"]).to be_instance_of(Array)
+
+  end
 end
