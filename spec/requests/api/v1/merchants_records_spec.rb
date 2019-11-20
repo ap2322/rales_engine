@@ -30,4 +30,16 @@ describe "Merchants Records API" do
     expect(response).to be_successful
     expect(merchant["data"]["id"].to_i).to eq(id)
   end
+
+  it "returns a merchant from a find query parameter" do
+    create_list(:merchant, 3)
+    create(:merchant, name: "Merchant Billy-Bob")
+    merchant = Merchant.find_by(name: "Merchant Billy-Bob")
+
+    get "/api/v1/merchants/find?name=#{merchant.name}"
+    json_merchant = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(json_merchant["data"]["attributes"]["name"]).to eq("Merchant Billy-Bob")
+  end
 end
