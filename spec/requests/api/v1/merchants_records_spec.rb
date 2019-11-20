@@ -68,6 +68,31 @@ describe "Merchants Records API" do
     expect(response).to be_successful
     expect(json_merchants["data"].count).to eq(3)
     expect(json_merchants["data"]).to be_instance_of(Array)
+    expect(json_merchants["data"].first["attributes"]["name"]).to eq("Jim James")
+
+    get "/api/v1/merchants/find_all?id=#{merchant.id}"
+    json_merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(json_merchants["data"].count).to eq(1)
+    expect(json_merchants["data"]).to be_instance_of(Array)
+    expect(json_merchants["data"].first["id"]).to eq(merchant.id.to_s)
+
+    get "/api/v1/merchants/find_all?created_at=#{merchant.created_at}"
+    json_merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(json_merchants["data"].count).to eq(1)
+    expect(json_merchants["data"]).to be_instance_of(Array)
+    expect(json_merchants["data"].first["id"]).to eq(merchant.id.to_s)
+
+    get "/api/v1/merchants/find_all?updated_at=#{merchant.updated_at}"
+    json_merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(json_merchants["data"].count).to eq(1)
+    expect(json_merchants["data"]).to be_instance_of(Array)
+    expect(json_merchants["data"].first["id"]).to eq(merchant.id.to_s)
 
   end
 end
