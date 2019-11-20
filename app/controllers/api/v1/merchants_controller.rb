@@ -14,4 +14,9 @@ class Api::V1::MerchantsController < ApplicationController
   def find_all
     render json: MerchantSerializer.new(Merchant.where(request.query_parameters))
   end
+
+  def random
+    random_id = rand(Merchant.first.id..Merchant.last.id)
+    render json: MerchantSerializer.new(Merchant.find(random_id))
+  end
 end

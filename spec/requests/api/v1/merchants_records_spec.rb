@@ -95,4 +95,15 @@ describe "Merchants Records API" do
     expect(json_merchants["data"].first["id"]).to eq(merchant.id.to_s)
 
   end
+
+  it "returns a random record" do
+    create_list(:merchant, 3)
+    id_low = Merchant.first.id
+    id_high = Merchant.last.id
+
+    get "/api/v1/merchants/random"
+    json_merchant = JSON.parse(response.body)
+    expect(response).to be_successful
+    expect(json_merchant["data"]["id"].to_i).to be_between(id_low, id_high)
+  end
 end
