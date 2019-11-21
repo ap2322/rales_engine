@@ -16,6 +16,13 @@ Rails.application.routes.draw do
         get '/random', to: 'customers#random'
       end
       resources :customers, only: [:index, :show]
+
+      scope :items do
+        get '/find', to: 'items#find'
+        get '/find_all', to: 'items#find_all'
+        get '/random', to: 'items#random'
+      end
+      resources :items, only: [:index, :show]
     end
   end
 end
