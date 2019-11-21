@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "Merchants Records API" do
 
-  after(:each) do
+  before(:each) do
     Merchant.all.destroy_all
   end
 

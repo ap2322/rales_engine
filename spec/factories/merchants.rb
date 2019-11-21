@@ -10,8 +10,9 @@ FactoryBot.define do
     end
 
     after(:create) do |merchant, evaluator|
-      merchant.invoices << create_list( :invoice, evaluator.invoice_count, :with_invoice_items, :with_transactions )
+      evaluator.invoice_count.times do
+        merchant.invoices << create(:invoice, :with_invoice_items, :with_transactions )
+      end
     end
   end
-
 end

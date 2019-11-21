@@ -2,8 +2,10 @@ FactoryBot.define do
   factory :invoice do
     status { 1 }
 
-    customer
-    merchant
+    # customer
+    # merchant
+    association :customer, factory: :customer
+    association :merchant, factory: :merchant
   end
 
   trait :with_invoice_items do
