@@ -7,7 +7,7 @@ describe "Merchant's business intelligence API" do
   # end
 
   it "returns the top x merchants ranked by revenue" do
-    binding.pry
+    # TODO: figure out if this test is adequate
     create_list(:merchant, 3, :with_invoices)
 
     get "/api/v1/merchants/most_revenue?quantity=2"
