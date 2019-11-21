@@ -16,7 +16,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def random
-    random_id = rand(Merchant.first.id..Merchant.last.id)
+    random_id = Merchant.ids.sample
     render json: MerchantSerializer.new(Merchant.find(random_id))
   end
 end
