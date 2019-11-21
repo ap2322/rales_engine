@@ -19,4 +19,8 @@ class Api::V1::MerchantsController < ApplicationController
     random_id = Merchant.ids.sample
     render json: MerchantSerializer.new(Merchant.find(random_id))
   end
+
+  def most_revenue
+    render json: MerchantSerializer.new(Merchant.most_revenue(request.query_parameters))
+  end
 end
