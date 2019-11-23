@@ -37,20 +37,21 @@ describe "Invoice Records API" do
     customer = create(:customer)
     invoice = Invoice.create!(status: 'shipped', customer_id: customer.id, merchant_id: merchant.id, created_at: "2012-03-27 14:53:59", updated_at: "2015-03-27 14:53:59")
 
-    attributes = ["status", "customer_id", "merchant_id"]
-
-    attributes.each do |attribute|
-      get "/api/v1/invoices/find?#{attribute}=#{invoice.send(attribute)}"
-      json_invoice = JSON.parse(response.body)
-
-      expect(response).to be_successful
-      expect(json_invoice["data"]["attributes"][attribute]).to eq(invoice.send(attribute))
-    end
+    # attributes = ["status", "customer_id", "merchant_id"]
+    #
+    # attributes.each do |attribute|
+    #   get "/api/v1/invoices/find?#{attribute}=#{invoice.send(attribute)}"
+    #   json_invoice = JSON.parse(response.body)
+    #
+    #   expect(response).to be_successful
+    #   expect(json_invoice["data"]["attributes"][attribute]).to eq(invoice.send(attribute))
+    # end
 
     hidden_attributes = ["created_at", "updated_at"]
 
     hidden_attributes.each do |attribute|
       get "/api/v1/invoices/find?#{attribute}=#{invoice.send(attribute)}"
+
       json_invoice = JSON.parse(response.body)
       expect(response).to be_successful
       expect(json_invoice["data"]["id"].to_i).to eq(invoice.id)
@@ -95,45 +96,30 @@ describe "Invoice Records API" do
       json_invoices = JSON.parse(response.body)
 
       expect(response).to be_successful
-      binding.pry
+
       expect(json_invoices["data"].count).to eq(3)
       expect(json_invoices["data"]).to be_instance_of(Array)
       expect(json_invoices["data"].first["id"]).to eq(invoice_in_group.id.to_s)
     end
 
-    #
-    # get "/api/v1/items/find_all?updated_at=#{item.updated_at}"
-    # json_items = JSON.parse(response.body)
-    #
-    # expect(response).to be_successful
-    # expect(json_items["data"].count).to eq(1)
-    # expect(json_items["data"]).to be_instance_of(Array)
-    # expect(json_items["data"].first["id"]).to eq(item.id.to_s)
-    #
-    # get "/api/v1/items/find_all?merchant_id=#{item.merchant_id}"
-    # json_items = JSON.parse(response.body)
-    #
-    # expect(response).to be_successful
-    # expect(json_items["data"].count).to eq(1)
-    # expect(json_items["data"]).to be_instance_of(Array)
-    # expect(json_items["data"].first["id"]).to eq(item.id.to_s)
-    #
-    # get "/api/v1/items/find_all?merchant_id=#{merchant_1.id}"
-    # json_items = JSON.parse(response.body)
-    #
-    # expect(response).to be_successful
-    # expect(json_items["data"].count).to eq(3)
-    # expect(json_items["data"]).to be_instance_of(Array)
-    # expect(json_items["data"].first["id"]).to eq(item.id.to_s)
+    hidden_attributes.each do |attribute|
+      get "/api/v1/invoices/find_all?#{attribute}=#{invoice.send(attribute)}"
+      json_invoices = JSON.parse(response.body)
 
+      expect(response).to be_successful
+
+      expect(json_invoices["data"].count).to eq(1)
+      expect(json_invoices["data"]).to be_instance_of(Array)
+      expect(json_invoices["data"].first["id"]).to eq(invoice.id.to_s)
+    end
   end
 
-  xit "returns a random record" do
-    create_list(:item, 3)
-    id_low = Item.first.id
-    id_high = Item.last.id
+  it "returns a random record" do
+    create_list(:invoice, 3)
+    id_low = Invoice.first.id
+    id_high = Invoice.last.id
 
-    get "/api/v1/items/random"
+    get "/api/v1/invoices/random"
     json_customer = JSON.parse(response.body)
     expect(response).to be_successful
     expect(json_customer["data"]["id"].to_i).to be_between(id_low, id_high)
