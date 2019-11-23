@@ -148,8 +148,8 @@ describe "Item Records API" do
     id_high = Item.last.id
 
     get "/api/v1/items/random"
-    json_customer = JSON.parse(response.body)
+    json_item = JSON.parse(response.body)
     expect(response).to be_successful
-    expect(json_customer["data"]["id"].to_i).to be_between(id_low, id_high)
+    expect(json_item["data"]["id"].to_i).to be_between(id_low, id_high)
   end
 end
