@@ -31,7 +31,7 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe 'methods' do
-    it 'returns the x number of merchants with the highest revenue' do
+    xit 'returns the x number of merchants with the highest revenue' do
       merchants = create_list(:merchant, 5, :with_invoices)
       merchant_1 = merchants.first
       merchant_2 = merchants.second
