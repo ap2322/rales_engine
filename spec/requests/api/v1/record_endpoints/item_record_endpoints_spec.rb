@@ -31,7 +31,7 @@ describe "Item Records API" do
     expect(item["data"]["id"].to_i).to eq(id)
   end
 
-  it "returns a customer from a find query parameter" do
+  it "returns an item from a find query parameter" do
     create_list(:item, 3)
     merchant = create(:merchant)
     item = Item.create!(name: "Best Thing Ever", description: "Seriously, it's the best thing ever", unit_price: 5.5, merchant_id: merchant.id, created_at: "2012-03-27 14:53:59", updated_at: "2015-03-27 14:53:59")
@@ -52,7 +52,7 @@ describe "Item Records API" do
     json_item = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(json_item["data"]["attributes"]["unit_price"]).to eq(item.unit_price)
+    expect(json_item["data"]["attributes"]["unit_price"]).to eq("#{item.unit_price}")
 
     get "/api/v1/items/find?merchant_id=#{item.merchant_id}"
     json_item = JSON.parse(response.body)
@@ -79,7 +79,7 @@ describe "Item Records API" do
 
   it "returns all items that match a specific query parameter" do
     merchant_1 = create(:merchant)
-    create_list(:item, 3, name: "Thingy", description: "It's a thing", unit_price: 3.4, merchant_id: merchant_1.id)
+    items = create_list(:item, 3, name: "Thingy", description: "It's a thing", unit_price: 3.4, merchant_id: merchant_1.id)
     merchant = create(:merchant)
     item = Item.create!(name: "Best Thing Ever", description: "Seriously, it's the best thing ever", unit_price: 5.5, merchant_id: merchant.id, created_at: "2012-03-27 14:53:59", updated_at: "2015-03-27 14:53:59")
 
@@ -137,7 +137,8 @@ describe "Item Records API" do
     expect(response).to be_successful
     expect(json_items["data"].count).to eq(3)
     expect(json_items["data"]).to be_instance_of(Array)
-    expect(json_items["data"].first["id"]).to eq(item.id.to_s)
+    item_in_collection = items.first
+    expect(json_items["data"].first["id"]).to eq(item_in_collection.id.to_s)
 
   end
 

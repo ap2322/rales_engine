@@ -5,4 +5,7 @@ class Invoice < ApplicationRecord
   has_many :transactions
 
   enum status: %w(pending shipped)
+
+  default_scope { order(id: :asc) }
+
 end
