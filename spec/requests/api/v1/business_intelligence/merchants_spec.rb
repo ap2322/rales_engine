@@ -6,7 +6,7 @@ describe "Merchant's business intelligence API" do
   #   Merchant.all.destroy_all
   # end
 
-  it "returns the top x merchants ranked by revenue" do
+  xit "returns the top x merchants ranked by revenue" do
     # TODO: figure out if this test is adequate
     create_list(:merchant, 3, :with_invoices)
 
