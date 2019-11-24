@@ -38,7 +38,7 @@ describe "InvoiceItem Records API" do
     item_2 = create(:item)
     indv_invoice_item = InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_2.id, quantity: 1, unit_price: 2.0, created_at: "2012-03-27 14:53:59", updated_at: "2015-03-27 14:53:59")
 
-    attributes = ['quantity','unit_price']
+    attributes = ['unit_price', 'quantity']
 
     invoice_item_group.push(indv_invoice_item)
 
@@ -48,7 +48,7 @@ describe "InvoiceItem Records API" do
         json_invoice_item = JSON.parse(response.body)
 
         expect(response).to be_successful
-        expect(json_invoice_item["data"]["attributes"][attribute]).to eq(invoice_item.send(attribute).to_s)
+        expect(json_invoice_item["data"]["attributes"][attribute].to_f).to eq(invoice_item.send(attribute))
       end
     end
 
@@ -88,7 +88,7 @@ describe "InvoiceItem Records API" do
 
         expect(response).to be_successful
         expect(json_invoice_item["data"]).to be_instance_of(Array)
-        expect(json_invoice_item["data"].first["attributes"][attribute]).to eq(invoice_item.send(attribute).to_s)
+        expect(json_invoice_item["data"].first["attributes"][attribute].to_f).to eq(invoice_item.send(attribute))
 
         # indv vs group check
         if invoice_item.id == indv_invoice_item.id
