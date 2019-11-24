@@ -8,7 +8,9 @@ Rails.application.routes.draw do
         get '/random', to: 'merchants#random'
         get '/most_revenue', to: 'merchants#most_revenue'
       end
-      resources :merchants, only: [:index, :show]
+      resources :merchants, only: [:index, :show] do
+        resources :items, only: [:index], module: :merchants
+      end
 
       scope :customers do
         get '/find', to: 'customers#find'
