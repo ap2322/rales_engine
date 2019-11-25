@@ -5,4 +5,5 @@ FactoryBot.define do
     unit_price { 1.5 }
     merchant
   end
+
 end
