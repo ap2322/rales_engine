@@ -16,5 +16,4 @@ FactoryBot.define do
       invoice.transactions << create_list(:transaction, evaluator.transaction_count)
     end
   end
-
 end
