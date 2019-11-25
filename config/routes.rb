@@ -36,8 +36,8 @@ Rails.application.routes.draw do
         resources :transactions, only: [:index], module: :invoices
         resources :invoice_items, only: [:index], module: :invoices
         resources :items, only: [:index], module: :invoices
-        resources :customers, only: [:index], module: :invoices
-        resources :merchants, only: [:index], module: :invoices
+        get '/customer', to: 'invoices/customers#index'
+        get '/merchant', to: 'invoices/merchants#index'
       end
 
       scope :transactions do

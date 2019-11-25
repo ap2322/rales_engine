@@ -63,12 +63,12 @@ describe "Invoices Relationships API" do
     end
   end
 
-  it 'returns a collection of customers associated with that invoice' do
+  it 'returns a customer associated with that invoice' do
     customer = create(:customer)
     invoices = create_list(:invoice, 3, customer_id: customer.id)
     extra_customer = create(:customer)
     invoices.each do |inv|
-      get "/api/v1/invoices/#{inv.id}/customers"
+      get "/api/v1/invoices/#{inv.id}/customer"
       expect(response).to be_successful
       customer = JSON.parse(response.body)
 
@@ -79,12 +79,12 @@ describe "Invoices Relationships API" do
     end
   end
 # GET /api/v1/invoices/:id/merchant returns the associated merchant
-  it 'returns a collection of merchants associated with that invoice' do
+  it 'returns a merchant associated with that invoice' do
     merch = create(:merchant)
     invoices = create_list(:invoice, 3, merchant_id: merch.id)
     extra_merchant = create(:merchant)
     invoices.each do |inv|
-      get "/api/v1/invoices/#{inv.id}/merchants"
+      get "/api/v1/invoices/#{inv.id}/merchant"
       expect(response).to be_successful
       merchant = JSON.parse(response.body)
 
