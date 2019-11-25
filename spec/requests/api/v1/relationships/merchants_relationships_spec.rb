@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-# GET /api/v1/merchants/:id/invoices returns a collection of invoices associated with that merchant from their known orders
-
 describe "Merchants Relationships API" do
 
   it 'returns a collection of items associated with a merchant' do
