@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       end
       resources :items, only: [:index, :show] do
         resources :invoice_items, only: [:index], module: :items
+        resources :merchant, only: [:index], module: :items
       end
 
       scope :invoices do

@@ -10,7 +10,7 @@ describe "Items Relationships API" do
       get "/api/v1/items/#{item.id}/invoice_items"
       expect(response).to be_successful
       invoice_items = JSON.parse(response.body)
-      
+
       invoice_items_belong_to_items = invoice_items["data"].all? do |inv_item|
         inv_item['attributes']['item_id'] == item.id
       end
@@ -23,16 +23,16 @@ describe "Items Relationships API" do
     end
   end
 
-  xit 'returns a merchant associated with that invoice' do
+  it 'returns a merchant associated with that item' do
     merch = create(:merchant)
-    invoices = create_list(:invoice, 3, merchant_id: merch.id)
+    items = create_list(:item, 3, merchant_id: merch.id)
     extra_merchant = create(:merchant)
-    invoices.each do |inv|
-      get "/api/v1/invoices/#{inv.id}/merchant"
+    items.each do |item|
+      get "/api/v1/items/#{item.id}/merchant"
       expect(response).to be_successful
       merchant = JSON.parse(response.body)
 
-      expect(merchant["data"]["attributes"]["id"]).to eq(inv.merchant.id)
+      expect(merchant["data"]["attributes"]["id"]).to eq(item.merchant.id)
 
       extra = merchant["data"]["attributes"]["id"] == extra_merchant.id
       expect(extra).to be_falsy
