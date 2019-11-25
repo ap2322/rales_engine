@@ -62,4 +62,36 @@ describe "Invoices Relationships API" do
       expect(extra).to be_falsy
     end
   end
+
+  it 'returns a collection of customers associated with that invoice' do
+    customer = create(:customer)
+    invoices = create_list(:invoice, 3, customer_id: customer.id)
+    extra_customer = create(:customer)
+    invoices.each do |inv|
+      get "/api/v1/invoices/#{inv.id}/customers"
+      expect(response).to be_successful
+      customer = JSON.parse(response.body)
+
+      expect(customer["data"]["attributes"]["id"]).to eq(inv.customer.id)
+
+      extra = customer["data"]["attributes"]["id"] == extra_customer.id
+      expect(extra).to be_falsy
+    end
+  end
+# GET /api/v1/invoices/:id/merchant returns the associated merchant
+  it 'returns a collection of merchants associated with that invoice' do
+    merch = create(:merchant)
+    invoices = create_list(:invoice, 3, merchant_id: merch.id)
+    extra_merchant = create(:merchant)
+    invoices.each do |inv|
+      get "/api/v1/invoices/#{inv.id}/merchants"
+      expect(response).to be_successful
+      merchant = JSON.parse(response.body)
+
+      expect(merchant["data"]["attributes"]["id"]).to eq(inv.merchant.id)
+
+      extra = merchant["data"]["attributes"]["id"] == extra_merchant.id
+      expect(extra).to be_falsy
+    end
+  end
 end
