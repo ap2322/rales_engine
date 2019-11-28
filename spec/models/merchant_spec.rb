@@ -21,7 +21,7 @@ RSpec.describe Merchant, type: :model do
       expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    xit 'deletes all invoices when a merchant is destroyed' do
+    it 'deletes all invoices when a merchant is destroyed' do
       merchant = create(:merchant, :with_invoices, :invoice_count => 1)
       invoice = merchant.invoices.last
 
