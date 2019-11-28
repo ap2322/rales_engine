@@ -2,24 +2,50 @@ require 'rails_helper'
 require 'rake'
 
 describe "Merchant's business intelligence API" do
-  # before(:each) do
-  #   Merchant.all.destroy_all
-  # end
+  before(:each) do
+    Merchant.all.destroy_all
+  end
+# GET /api/v1/merchants/most_revenue?quantity=x returns the top x merchants ranked by total revenue
+  it "returns the top x merchants ranked by revenue" do
+    Merchant.all.destroy_all
+    merchant_1 = create(:merchant)
+    merchant_2 = create(:merchant)
+    merchant_3 = create(:merchant)
 
-  xit "returns the top x merchants ranked by revenue" do
-    # TODO: figure out if this test is adequate
-    create_list(:merchant, 3, :with_invoices)
+    create_list(:invoice, 3, merchant_id: merchant_1.id)
+    merchant_1.invoices.each do |invoice|
+      item = create(:item, merchant_id: merchant_1.id)
+      create(:invoice_item, invoice_id: invoice.id, item_id: item.id, unit_price: 3.0, quantity: 2)
+      create(:transaction, invoice_id: invoice.id)
+    end
+
+    create_list(:invoice, 3, merchant_id: merchant_2.id)
+    merchant_2.invoices.each do |invoice|
+      item = create(:item, merchant_id: merchant_2.id)
+      create(:invoice_item, invoice_id: invoice.id, item_id: item.id, unit_price: 4.0, quantity: 2)
+      create(:transaction, invoice_id: invoice.id)
+    end
+
+    create_list(:invoice, 3, merchant_id: merchant_3.id)
+    merchant_3.invoices.each do |invoice|
+      item = create(:item, merchant_id: merchant_3.id)
+      create(:invoice_item, invoice_id: invoice.id, item_id: item.id, unit_price: 5.0, quantity: 2)
+      create(:transaction, invoice_id: invoice.id)
+    end
 
     get "/api/v1/merchants/most_revenue?quantity=2"
 
     expect(response).to be_successful
 
     merchants = JSON.parse(response.body)
+
     top_1_merchant = Merchant.find(merchants["data"].first["id"])
     top_2_merchant = Merchant.find(merchants["data"].second["id"])
 
     expect(merchants["data"].count).to eq 2
     expect(merchants["data"]).to be_instance_of(Array)
+    expect(top_1_merchant.id).to eq merchant_3.id
+    expect(top_2_merchant.id).to eq merchant_2.id
 
   end
 end
