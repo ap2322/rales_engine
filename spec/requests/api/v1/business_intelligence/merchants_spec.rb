@@ -49,6 +49,7 @@ describe "Merchant's business intelligence API" do
 
   # GET /api/v1/merchants/revenue?date=x returns the total revenue for date x across all merchants
   it 'returns the total revenue for date x across all merchants' do
+    Merchant.all.destroy_all
     merchant_1 = create(:merchant)
     merchant_2 = create(:merchant)
     merchant_3 = create(:merchant)
@@ -74,9 +75,14 @@ describe "Merchant's business intelligence API" do
       create(:transaction, invoice_id: invoice.id, created_at: '2012-03-10 10:54:10 UTC')
     end
 
+    date_1 = '2012-03-27'
 
-    get "/api/v1/merchants/revenue?date=#{x}"
+    get "/api/v1/merchants/revenue?date=#{date_1}"
 
     expect(response).to be_successful
+
+    revenue = JSON.parse(response.body)
+
+    expect(revenue["data"]["attributes"]["total_revenue"].to_f).to eq 18
   end
 end
