@@ -17,4 +17,18 @@ class Item < ApplicationRecord
     .order('revenue desc')
     .limit(limit_number)
   end
+
+  def best_day
+    invoices
+    .unscoped
+    .joins(:transactions, :invoice_items)
+    .merge(Transaction.unscoped.successful)
+    .select("invoices.created_at::timestamp::date, sum(invoice_items.quantity) as sales")
+    .group("invoices.created_at::timestamp::date, invoice_items.item_id")
+    .having(invoice_items: {item_id: id})
+    .order("sales desc, invoices.created_at::timestamp::date desc")
+    .first
+    .created_at
+    .strftime("%F")
+  end
 end

@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       resources :items, only: [:index, :show] do
         resources :invoice_items, only: [:index], module: :items
         resources :merchant, only: [:index], module: :items
+        get '/best_day', to: 'items/best_day#show'
       end
 
       scope :invoices do
