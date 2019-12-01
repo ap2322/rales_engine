@@ -98,5 +98,30 @@ RSpec.describe Merchant, type: :model do
       expect(Merchant.revenue(date_1)).to eq(total_date_1)
       expect(Merchant.revenue(date_2)).to eq(total_date_2)
     end
+
+    it 'returns the customer for a merchant with the most successful transactions' do
+      merchant_1 = create(:merchant)
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
+      customer_3 = create(:customer)
+
+      create_list(:invoice, 3, merchant_id: merchant_1.id, customer_id: customer_1.id)
+      customer_1.invoices.each do |invoice|
+        create(:transaction, invoice_id: invoice.id)
+      end
+
+      create_list(:invoice, 4, merchant_id: merchant_1.id, customer_id: customer_2.id)
+      customer_2.invoices.each do |invoice|
+        create(:transaction, invoice_id: invoice.id)
+      end
+
+      create_list(:invoice, 2, merchant_id: merchant_1.id, customer_id: customer_3.id)
+      customer_3.invoices.each do |invoice|
+        create(:transaction, invoice_id: invoice.id)
+      end
+
+      expect(merchant_1.favorite_customer).to eq(customer_2)
+      expect(merchant_1.favorite_customer).to_not eq(customer_1)
+    end
   end
 end
