@@ -115,7 +115,5 @@ describe "Merchant's business intelligence API" do
     expect(response).to be_successful
     expect(customer["data"]["id"].to_i).to eq(customer_2.id)
 
-    binding.pry
-
   end
 end
