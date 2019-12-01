@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         get '/find', to: 'items#find'
         get '/find_all', to: 'items#find_all'
         get '/random', to: 'items#random'
+        get '/most_revenue', to: 'items/most_revenue#index'
       end
       resources :items, only: [:index, :show] do
         resources :invoice_items, only: [:index], module: :items
