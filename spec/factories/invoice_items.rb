@@ -5,7 +5,8 @@ FactoryBot.define do
     created_at {"2012-03-25 09:54:09"}
     updated_at {"2012-03-25 09:54:09"}
     association :item, factory: :item
-    invoice
+    association :invoice, factory: :invoice
+
     FactoryBot.rewind_sequences
   end
 end
