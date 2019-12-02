@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       scope :merchants do
-        get '/find', to: 'merchants#find'
-        get '/find_all', to: 'merchants#find_all'
-        get '/random', to: 'merchants#random'
+        get '/find', to: 'merchants/find#show'
+        get '/find_all', to: 'merchants/find#index'
+        get '/random', to: 'merchants/random#show'
         get '/most_revenue', to: 'merchants/most_revenue#index'
         get '/revenue', to: 'merchants/revenue#index'
       end
@@ -16,9 +16,9 @@ Rails.application.routes.draw do
       end
 
       scope :customers do
-        get '/find', to: 'customers#find'
-        get '/find_all', to: 'customers#find_all'
-        get '/random', to: 'customers#random'
+        get '/find', to: 'customers/find#show'
+        get '/find_all', to: 'customers/find#index'
+        get '/random', to: 'customers/random#show'
       end
       resources :customers, only: [:index, :show] do
         resources :invoices, only: [:index], module: :customers
@@ -27,9 +27,9 @@ Rails.application.routes.draw do
       end
 
       scope :items do
-        get '/find', to: 'items#find'
-        get '/find_all', to: 'items#find_all'
-        get '/random', to: 'items#random'
+        get '/find', to: 'items/find#show'
+        get '/find_all', to: 'items/find#index'
+        get '/random', to: 'items/random#show'
         get '/most_revenue', to: 'items/most_revenue#index'
       end
       resources :items, only: [:index, :show] do
@@ -39,9 +39,9 @@ Rails.application.routes.draw do
       end
 
       scope :invoices do
-        get '/find', to: 'invoices#find'
-        get '/find_all', to: 'invoices#find_all'
-        get '/random', to: 'invoices#random'
+        get '/find', to: 'invoices/find#show'
+        get '/find_all', to: 'invoices/find#index'
+        get '/random', to: 'invoices/random#show'
       end
       resources :invoices, only: [:index, :show] do
         resources :transactions, only: [:index], module: :invoices
@@ -52,18 +52,18 @@ Rails.application.routes.draw do
       end
 
       scope :transactions do
-        get '/find', to: 'transactions#find'
-        get '/find_all', to: 'transactions#find_all'
-        get '/random', to: 'transactions#random'
+        get '/find', to: 'transactions/find#show'
+        get '/find_all', to: 'transactions/find#index'
+        get '/random', to: 'transactions/random#show'
       end
       resources :transactions, only: [:index, :show] do
         resources :invoice, only: [:index], module: :transactions
       end
 
       scope :invoice_items do
-        get '/find', to: 'invoice_items#find'
-        get '/find_all', to: 'invoice_items#find_all'
-        get '/random', to: 'invoice_items#random'
+        get '/find', to: 'invoice_items/find#show'
+        get '/find_all', to: 'invoice_items/find#index'
+        get '/random', to: 'invoice_items/random#show'
       end
       resources :invoice_items, only: [:index, :show] do
         get '/invoice', to: 'invoice_items/invoice#index'
