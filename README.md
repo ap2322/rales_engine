@@ -2,7 +2,7 @@
 
 Rales Engine is an api for sales data that returns record, relationship, and business intelligence endpoints. 
 
-	![Diagram of the Rales Engine schema](https://github.com/ap2322/rales_engine/blob/master/rales_engine_resource_diagram.png?raw=true)
+![Diagram of the Rales Engine schema](https://github.com/ap2322/rales_engine/blob/master/rales_engine_resource_diagram.png?raw=true)
 
 ---
 **Ruby Versions and Setup**
