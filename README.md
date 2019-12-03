@@ -13,7 +13,7 @@ Rales Engine is an api for sales data that returns record, relationship, and bus
 * Configuration: Create a project folder for this repo. Move into it and clone this repo into that project folder. After cloning the repo, run `bundle install` in the terminal to install gems.
 
 * Database creation:  
-Run `bundle exec rake db:{create, migrate}` to set up the database. To import the csv data into the application, run `rake import:all` in the terminal.
+Run `bundle exec rake db:{create, migrate}` to set up the database. To import the csv data into the application, run `rake import:all` in the terminal. This will take some time.
 
 * How to run the test suite  
 From the terminal, run `rspec` to run the test files within rales_engine.  
@@ -38,6 +38,34 @@ Each resource can be queried through the following api endpoints:
 - Find a resource with a query: `/api/v1/merchants/find?<query_parameter>`, e.g. `/api/v1/merchants/find?name=Schroeder-Jerde`
 - Find all of a resource with a query: `/api/v1/merchants/find_all?<query_parameter>`, e.g. `/api/v1/merchants/find_all?name=Cummings-Thiel`
 - Find a random resource: `api/v1/<resource>/random`, e.g. `api/v1/merchants/random`
+
+**Query Parameters for Records:**
+All records can be queried with `id` and timestamps `created_at` and `updated_at`
+
+- Merchants 
+    - `name`
+- Items
+    - `name`
+    - `description`
+    - `unit_price`
+    - `merchant_id`
+- Customers
+    - `first_name`
+    - `last_name`
+- Invoices
+    - `status`
+    - `merchant_id`
+    - `customer_id`
+- InvoiceItems
+    - `quantity`
+    - `unit_price`
+    - `invoice_id`
+    - `item_id`
+- Transactions
+    - `credit_card_number` *(this is made up data)*
+    - `credit_card_expiration_date`
+    - `result`
+    - `invoice_id`
 
 **Relationship Endpoints**
 
