@@ -20,7 +20,8 @@ From the terminal, run `rspec` to run the test files within rales_engine.
 To run against the spec harness provided by Turing School, clone the repo into the project folder (adjacent to the clone of rales_engine). Then, within in one terminal window, run the rales_engine on localhost with the command `rails s`. In another terminal window, navigate into the spec harness repo and run `rake`.
 
 ---
-<h2>About Rales Engine</h2>
+<h1>About Rales Engine</h1>
+Rales Engine is an API for sales data that returns record, relationship, and business intelligence endpoints. 
 
 Rales Engine includes six main resources:
 1. customers
@@ -30,7 +31,9 @@ Rales Engine includes six main resources:
 5. invoice_items
 6. transactions
 
-Each resource can be queried through the following api endpoints:
+<h1>API Documentation</h1>
+
+Each of the six rales_engine resources can be queried through the following api endpoints:
 
 **Record Endpoints:**  
 - Index of all resources: `/api/v1/<resource>`, e.g. `/api/v1/merchants`
