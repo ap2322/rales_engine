@@ -300,7 +300,7 @@ DEPENDENCIES
   csv
   factory_bot_rails
   fast_jsonapi
-  listen
+  listen (~> 3.10)
   pg (~> 1.5)
   pry
   puma (~> 7.2, >= 7.2.1)
@@ -309,7 +309,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   spring
-  spring-watcher-listen
+  spring-watcher-listen (~> 2.1)
   tzinfo-data
 
 RUBY VERSION
