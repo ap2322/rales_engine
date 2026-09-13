@@ -5,7 +5,7 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
   has_many :transactions, dependent: :destroy
 
-  enum status: %w(pending shipped)
+  enum :status, %w(pending shipped)
 
   default_scope { order(id: :asc) }
 

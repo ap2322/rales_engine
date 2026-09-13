@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :merchant do
-    sequence :name {|i| "Merchant Bob #{i}" }
+    sequence(:name) { |i| "Merchant Bob #{i}" }
     FactoryBot.rewind_sequences
   end
 
