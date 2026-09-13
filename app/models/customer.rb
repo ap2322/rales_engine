@@ -12,7 +12,7 @@ class Customer < ApplicationRecord
     .where(transactions: {result: 'success'}, invoices: {customer_id: id})
     .group("merchants.id, invoices.id")
     .reorder(nil)
-    .order("purchases desc")
+    .order(Arel.sql("purchases desc"))
     .first
   end
 end

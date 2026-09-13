@@ -11,7 +11,7 @@ class Merchant < ApplicationRecord
     joins(:invoice_items, :transactions)
     .select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
     .group(:id)
-    .order("revenue desc")
+    .order(Arel.sql("revenue desc"))
     .limit(x)
     # .merge(Transaction.unscoped.successful)
   end
@@ -34,7 +34,7 @@ class Merchant < ApplicationRecord
             .select("count(invoices.customer_id) as invoices_per_customer, customers.*, invoices.merchant_id")
             .where(transactions: {result: 'success'}, merchants: {id: id})
             .group("customers.id, invoices.merchant_id")
-            .order("invoices_per_customer desc")
+            .order(Arel.sql("invoices_per_customer desc"))
             .having(invoices: {merchant_id: id})
             .first
   end

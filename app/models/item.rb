@@ -14,7 +14,7 @@ class Item < ApplicationRecord
     .distinct
     .select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) as revenue")
     .group(:id)
-    .order('revenue desc')
+    .order(Arel.sql('revenue desc'))
     .limit(limit_number)
   end
 
@@ -23,12 +23,12 @@ class Item < ApplicationRecord
     .unscoped
     .joins(:transactions, :invoice_items)
     .merge(Transaction.unscoped.successful)
-    .select("invoices.created_at::timestamp::date, sum(invoice_items.quantity) as sales")
+    .select("invoices.created_at::timestamp::date as sale_date, sum(invoice_items.quantity) as sales")
     .group("invoices.created_at::timestamp::date, invoice_items.item_id")
     .having(invoice_items: {item_id: id})
-    .order("sales desc, invoices.created_at::timestamp::date desc")
+    .order(Arel.sql("sales desc, invoices.created_at::timestamp::date desc"))
     .first
-    .created_at
+    .sale_date
     .strftime("%F")
   end
 end
