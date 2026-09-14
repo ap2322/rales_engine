@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      # Batch same-risk patch/minor bumps into one PR instead of one PR per
+      # gem, so routine updates don't pile up unreviewed the way they did
+      # before (this repo sat 2 Rails majors and ~140 flagged CVEs behind
+      # before #41). Majors are excluded from the group so each one gets its
+      # own PR and explicit review.
+      routine-updates:
+        applies-to: version-updates
+        update-types:
+          - "patch"
+          - "minor"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
